@@ -1,11 +1,7 @@
 #ifndef LIBASM_H_
 # define LIBASM_H_
 
-# define BUF_SIZE   20
-
 # include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
 # include <fcntl.h>
 
 size_t	ft_strlen(const char *str);
