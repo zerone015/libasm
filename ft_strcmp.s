@@ -15,7 +15,7 @@ loop_start:
     jmp loop_start
 
 loop_end:
-    mov al, byte [rdi + rcx]
-    sub al, byte [rsi + rcx]
+    mov al, [rdi + rcx]
+    sub al, [rsi + rcx]
     movsx eax, al
     ret
