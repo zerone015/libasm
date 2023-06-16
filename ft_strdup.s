@@ -3,6 +3,7 @@ section .text
     extern _ft_strlen
     extern _malloc
     extern _ft_strcpy
+    
 _ft_strdup:
     push rdi
     call _ft_strlen
@@ -16,5 +17,6 @@ _ft_strdup:
     mov rdi, rax
     call _ft_strcpy
     mov rdi, rsi
+
 end: 
     ret
