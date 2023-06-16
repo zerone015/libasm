@@ -17,5 +17,9 @@ int main(void) {
 	printf("ft_read: %zd\n", ft_read(open("ft_read.s", O_RDONLY), buf, 50));
 	printf("ft_read: %zd\n", ft_read(-1, buf, 50));
 	perror("perror");
+	char *str1 = ft_strdup("hi");
+	printf("ft_strdup: %s\n", str1);
+	char *str2 = ft_strdup("");
+	printf("ft_strdup: %s\n", str2);
 	return 0;	
 }
