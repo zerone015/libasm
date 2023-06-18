@@ -14,7 +14,7 @@ OBJS = $(SRCS:%.s=%.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	ar rcs $@ $^
+	$(AR) ${ARFLAGS} $@ $^
 
 clean : 
 	$(RM) $(OBJS)
