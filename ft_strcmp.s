@@ -13,5 +13,5 @@ _loop_start:
 _loop_end:
     mov al, [rdi + rcx]
     sub al, [rsi + rcx]
-    movsx eax, al
+    movsx rax, al
     ret
