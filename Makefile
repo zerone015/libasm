@@ -6,18 +6,30 @@ ARFLAGS = rsc
 
 SRCS = ft_read.s	ft_strcmp.s	ft_strcpy.s	ft_strdup.s \
 	   ft_strlen.s	ft_write.s
+BSRCS = ft_atoi_base.s
+
 OBJS = $(SRCS:%.s=%.o)
+BOBJS = $(BSRCS:%.s=%.o)
+
+ifdef WITH_BONUS
+    OBJ_FILES = $(OBJS) $(BOBJS)
+else
+    OBJ_FILES = $(OBJS)
+endif
 
 %.o : %.s
 	nasm -f macho64 $<	
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
+bonus :
+	make WITH_BONUS=1 all
+
+$(NAME) : $(OBJ_FILES)
 	$(AR) ${ARFLAGS} $@ $^
 
 clean : 
-	$(RM) $(OBJS)
+	$(RM) $(wildcard *.o)
 
 fclean : clean
 	$(RM) $(NAME)
@@ -25,4 +37,4 @@ fclean : clean
 re : fclean
 	$(MAKE) all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
