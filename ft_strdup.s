@@ -15,6 +15,5 @@ _ft_strdup:
     mov rsi, rdi
     mov rdi, rax
     call _ft_strcpy
-    mov rdi, rsi
 _end: 
     ret
