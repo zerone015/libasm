@@ -9,4 +9,6 @@ typedef struct s_list
     struct s_list   *next;
 }   t_list;
 
+int	ft_atoi_base(char *str, char *base);
+
 #endif

@@ -1,64 +1,91 @@
 section .text
     global _ft_atoi_base
 _ft_atoi_base:
-    mov rcx, 0
+    mov rcx, -1
 _find_radix:
-    cmp rsi[rcx], 0
+    inc rcx
+    mov al, [rsi + rcx]
+    cmp al, 0
     je _find_radix_end
-    cmp rsi[rcx], 43
+    cmp al, 43
     je _ft_atoi_base_err
-    cmp rsi[rcx], 45
+    cmp al, 45
     je _ft_atoi_base_err
-    cmp rsi[rcx], 32
+    cmp al, 32
     je _ft_atoi_base_err
-    cmp rsi[rcx], 9
+    cmp al, 9
     jl _base_duplication_check
-    cmp rsi[rcx], 13
+    cmp al, 13
     jg _base_duplication_check
     jmp _ft_atoi_base_err
 _base_duplication_check:
-    inc rcx
-    mov rdx, rcx
+    mov r11, rcx
+    inc r11
 _base_duplication_check_loop:
-    cmp rsi[rdx], 0
+    cmp byte [rsi + r11], 0
     je _find_radix
-    cmp byte rsi[rcx], byte rsi[rdx]
+    cmp al, [rsi + r11]
     je _ft_atoi_base_err
-    inc rdx
+    inc r11
     jmp _base_duplication_check_loop
 _find_radix_end:
     cmp rcx, 2
     jl _ft_atoi_base_err
-    mov rdx, 0
+    mov r11, 0
+    mov r8, 1
 _skip_whitespace:
-    cmp rdi[rdx], 32
+    mov al, [rdi + r11]
+    cmp al, 32
     je _inc_skip_whitespace
-    cmp rdi[rdx], 9
+    cmp al, 9
     jl _find_sign
-    cmp rdi[rdx], 13
+    cmp al, 13
     jg _find_sign
     jmp _inc_skip_whitespace
 _inc_skip_whitespace:
-    inc rdx
+    inc r11
     jmp _skip_whitespace
 _find_sign:
-    cmp rdi[rdx], 45
+    mov al, [rdi + r11]
+    cmp al, 45
     je _set_negative
-    cmp rdi[rdx], 43
+    cmp al, 43
     je _set_positive
     jmp _ft_atoi
 _set_negative:
-    mov rax, -1
-    inc rdx
+    mov r8, -1
+    inc r11
     jmp _find_sign
 _set_positive:
-    mov rax, 1
-    inc rdx
+    mov r8, 1
+    inc r11
     jmp _find_sign
 _ft_atoi:
-    ; 여기 ㄱㄱ
-    
-
+    mov eax, 0
+_ft_atoi_loop_start:
+    mov r9b, [rdi + r11]
+    cmp r9b, 0
+    je _ft_atoi_end
+    mov r10, 0
+_find_base:
+    cmp byte [rsi + r10], 0
+    je _ft_atoi_end
+    cmp [rsi + r10], r9b
+    je _cal_number
+    inc r10
+    jmp _find_base
+_cal_number:
+    imul ecx
+    add eax, r10d
+    inc r11
+    jmp _ft_atoi_loop_start
+_ft_atoi_end:
+    cmp r8, -1
+    je _ft_atoi_neg_end
+    ret
+_ft_atoi_neg_end:
+    neg eax
+    ret
 _ft_atoi_base_err:
-    mov rax, 0
+    mov eax, 0
     ret
