@@ -3,6 +3,7 @@
 void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
                        void (*free_fct)(void *)) {
   t_list *del;
+  t_list *temp;
 
   while (*begin_list && cmp((*begin_list)->data, data_ref) == 0) {
     del = *begin_list;
@@ -12,11 +13,14 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
   if (!(*begin_list)) {
     return;
   }
-  while ((*begin_list)->next) {
-    if (cmp((*begin_list)->next->data, data_ref) == 0) {
-      del = (*begin_list)->next;
-      (*begin_list)->next = del->next;
+  temp = *begin_list;
+  while (temp && temp->next) {
+    if (cmp(temp->next->data, data_ref) == 0) {
+      del = temp->next;
+      temp->next = del->next;
       free_fct(del);
-    }
+      continue;
+    } 
+    temp = temp->next;
   }
 }
