@@ -1,7 +1,7 @@
 section .text
     global _ft_strcpy
 _ft_strcpy:
-    xor rcx, rcx                    ; rcx 0으로 초기화
+    xor ecx, ecx                    ; rcx 0으로 초기화
 loop_start:
     cmp byte [rsi + rcx], 0         ; src 문자열의 끝인지 체크
     je end

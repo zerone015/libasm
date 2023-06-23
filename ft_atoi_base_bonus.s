@@ -31,7 +31,7 @@ base_duplication_check_loop:
 find_radix_end:
     cmp rcx, 2                          ; 구한 기수가 2보다 작은지 확인
     jl ft_atoi_base_err                 ; 2보다 작은 기수는 없으므로 에러로 점프
-    xor r11, r11                        ; str의 오프셋 값으로 사용하기 위해 0으로 초기화
+    xor r11d, r11d                      ; str의 오프셋 값으로 사용하기 위해 0으로 초기화
     mov r8, 1                           ; 반환할 정수를 양수로 초기화
 skip_whitespace:
     mov al, [rdi + r11]                 ; str의 문자를 레지스터로 적재
@@ -66,7 +66,7 @@ ft_atoi_loop_start:
     mov r9b, [rdi + r11]                ; str의 현재 문자를 적재
     cmp r9b, 0                          ; 널문자 확인
     je ft_atoi_end                      ; 정수 값을 다 구했으면 end로 점프
-    xor r10, r10                        ; 베이스 값을 구하기 위해 오프셋을 0으로 초기화
+    xor r10d, r10d                      ; 베이스 값을 구하기 위해 오프셋을 0으로 초기화
 find_base:
     cmp byte [rsi + r10], 0             ; 널문자 확인
     je ft_atoi_end                      ; 널문자라는건 base에 포함되지 않은 문자가 str에 포함된것이므로 atoi 종료
