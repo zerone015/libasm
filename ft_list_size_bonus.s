@@ -1,7 +1,7 @@
 section .text
     global _ft_list_size
 _ft_list_size:
-    mov rax, 0                  ; 0으로 초기화
+    xor rax, rax                ; 0으로 초기화
 loop_start:
     cmp qword rdi, 0            ; null check
     je end                      ; 종료

@@ -1,7 +1,7 @@
 section .text
     global _ft_strcmp
 _ft_strcmp:
-    mov rcx, 0                      ; rcx 0으로 초기화
+    xor rcx, rcx                    ; rcx 0으로 초기화
 loop_start:
     cmp byte [rdi + rcx], 0         ; 문자열 끝 체크
     je end                          ; 문자열 끝이면 종료  
