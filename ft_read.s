@@ -4,9 +4,9 @@ section .text
 _ft_read:
 	mov rax, 0x2000003				; 시스템 콜 번호 저장
 	syscall							; read 호출
-	jc _err 						; 캐리 비트가 설정되었으면 _err로 점프
+	jc err 							; 캐리 비트가 설정되었으면 err 점프
 	ret								
-_err:
+err:
 	push rax						; errno 스택에 보존
 	call ___error					; errno 저장할 메모리 주소를 가져옴
 	pop rdx							; 스택에 보존했던 errno를 rdx에 적재

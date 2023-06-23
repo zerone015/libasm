@@ -11,9 +11,9 @@ _ft_strdup:
     call _malloc            ; malloc 호출
     pop rdi                 ; 복사할 문자열을 다시 rdi 레지스터에 적재
     cmp rax, 0              ; malloc 반환 값이 null이면 그대로 종료
-    je _end
+    je end
     mov rsi, rdi            ; 복사할 문자열 주소 저장
     mov rdi, rax            ; 새로 할당한 문자열 주소 저장
     call _ft_strcpy         ; 새로 할당한 문자열에 복사할 문자열 복사
-_end: 
+end: 
     ret
