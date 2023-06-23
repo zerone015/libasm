@@ -1,6 +1,8 @@
 section .text
     global _ft_list_remove_if
 _ft_list_remove_if:
+    cmp qword [rdi], 0
+    je end
     sub rsp, 40
     mov [rsp], r12                      ; 비휘발성 레지스터의 기존 값 스택에 보존
     mov [rsp + 8], r13                  ; 비휘발성 레지스터의 기존 값 스택에 보존
@@ -35,17 +37,18 @@ check_first_node:
     mov rsi, r13                        ; cmp를 호출하기 전에 data_ref를 두 번째 파라미터로 저장
     call rbx                            ; cmp를 호출
     cmp rax, 0                          ; 삭제 대상인지 확인
-    jne end                             ; 삭제 대상이 아니면 그대로 종료
+    jne clean_up                        ; 삭제 대상이 아니면 종료
 remove_first_node:
     mov rdi, r14                        ; free_fct를 호출하기 전에 첫 번째 노드를 첫 번째 파라미터에 저장
     mov rdx, [rdi + 8]                  ; 첫 번째 노드의 다음 노드를 저장
     mov [r12], rdx                      ; 첫 번째 노드의 다음 노드를 첫 번째 노드로 설정
     call rbp                            ; free_fct 호출
-end:
+clean_up:
     mov r12, [rsp]
     mov r13, [rsp + 8]
     mov rbx, [rsp + 16]
     mov rbp, [rsp + 24]
     mov r14, [rsp + 32]
     add rsp, 40
+end:
     ret
