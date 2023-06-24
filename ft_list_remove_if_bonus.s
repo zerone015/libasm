@@ -24,13 +24,13 @@ loop_start:
     cmp rax, 0                          ; 삭제 대상인지 확인
     je remove_node                      ; 노드를 삭제하기 위해 점프
     mov r14, [r14 + 8]                  ; 현재 노드를 다음 노드로 설정
-    je loop_start                       ; 다시 루프
+    jmp loop_start                      ; 다시 루프
 remove_node:
     mov rdi, [r14 + 8]                  ; free_fct를 호출하기 전에 삭제할 노드를 첫 번째 파라미터에 저장
     mov rdx, [rdi + 8]                  ; 레지스터에 삭제할 노드의 다음 노드 주소를 저장
     mov [r14 + 8], rdx                  ; 현재 노드의 다음 노드가 삭제할 노드의 다음 노드가 되도록 설정
     call rbp                            ; free_fct 호출
-    je loop_start                       ; 다시 루프
+    jmp loop_start                      ; 다시 루프
 check_first_node:
     mov r14, [r12]                      ; 첫 번째 노드를 저장
     mov rdi, [r14]                      ; cmp를 호출하기 전에 첫 번째 노드의 data를 첫 번째 파라미터로 저장

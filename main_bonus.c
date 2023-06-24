@@ -26,7 +26,7 @@ int main(void) {
   ft_list_sort(&list2, strcmp);
   t_list *temp = list2;
   while (temp) {
-    printf("%s \n", temp->data);
+    printf("%s \n", (char *)temp->data);
     temp = temp->next;
   }
   return 0;
