@@ -32,7 +32,7 @@ find_radix_end:
     cmp rcx, 2                          ; 구한 기수가 2보다 작은지 확인
     jl ft_atoi_base_err                 ; 2보다 작은 기수는 없으므로 에러로 점프
     xor r11d, r11d                      ; str의 오프셋 값으로 사용하기 위해 0으로 초기화
-    mov r8, 1                           ; 반환할 정수를 양수로 초기화
+    mov r8b, 1                           ; 반환할 정수를 양수로 초기화
 skip_whitespace:
     mov al, [rdi + r11]                 ; str의 문자를 레지스터로 적재
     cmp al, 32                          ; 문자가 스페이스인지 확인
@@ -48,16 +48,13 @@ inc_skip_whitespace:
 find_sign:
     mov al, [rdi + r11]                 ; str의 문자를 레지스터로 적재
     cmp al, 45                          ; 문자가 -인지 검사
-    je set_negative                     ; -이면 음수로 설정하고 다시 루프
+    je negate                           ; -이면 음수로 설정하고 다시 루프
     cmp al, 43                          ; 문자가 +인지 검사
-    je set_positive                     ; +이면 양수로 설정하고 다시 루프
+    je inc_find_sign                    ; +이면 양수로 설정하고 다시 루프
     jmp ft_atoi                         ; 부호 문자가 아니면 ft_atoi로 점프
-set_negative:
-    mov r8, -1                          ; 음수로 설정
-    inc r11                             ; str의 오프셋 증가
-    jmp find_sign                       ; 다시 부호 검사 루프로 점프
-set_positive:
-    mov r8, 1                           ; 양수로 설정
+negate:
+    neg r8b                             ; 부호 반전
+inc_find_sign:
     inc r11                             ; str의 오프셋 증가
     jmp find_sign                       ; 다시 부호 검사 루프로 점프
 ft_atoi:
@@ -80,7 +77,7 @@ cal_number:
     inc r11                             ; str의 오프셋 증가
     jmp ft_atoi_loop_start              ; 다시 루프
 ft_atoi_end:
-    cmp r8, -1                          ; 음수인지 확인
+    cmp r8b, -1                         ; 음수인지 확인
     je ft_atoi_neg_end                  ; 음수이면 음수로 반환하기 위해 점프
     ret     
 ft_atoi_neg_end:
